@@ -1,0 +1,21 @@
+name: Assign build number
+
+on:
+  push: 
+    branches: ['octo-v1.0']
+  pull_request:
+    branches: ['octo-v1.0']
+
+jobs:
+  build-number:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      
+
+      - name: Set Build Number
+        run: echo "BUILD_NO=1.0.${{ github.run_number }}" >> $GITHUB_ENV
+
+      - name: Show Build Number
+        run: echo "The build number is ${{env.BUILD_NO}}"
