@@ -1,0 +1,34 @@
+name: TODO Workflow
+run-name: "TODO flow : Run id: ${{ github.run_id }}"
+
+on:
+  push:
+    branches: ['octo-v1.0']
+    paths:
+      - 'TODO.md'
+
+  pull_request:
+    branches: ['octo-v1.0']
+    paths:
+      - 'TODO.md'
+
+jobs:
+  todo-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate unique todo number.
+        # $GITHUB_OUTPUT (requires id): Makes the variable available to other steps AND other jobs (if mapped correctly).
+        id: generator
+        run: |
+          # Generates a unique todo number
+          RANDOM_ID=$((10000 + RANDOM % 90000))
+          echo "TODO_ID=$RANDOM_ID" >> $GITHUB_ENV
+          echo "GENERATED_TODO_ID=$RANDOM_ID" >> $GITHUB_OUTPUT
+
+      - name: Todo Update
+        run: |
+          echo "🚀 The TODO.md file was updated. No other flow will trigger 🚀" >> $GITHUB_STEP_SUMMARY
+          echo "🚀 Generated TODO Number: ${{env.TODO_ID}}" >> $GITHUB_STEP_SUMMARY
