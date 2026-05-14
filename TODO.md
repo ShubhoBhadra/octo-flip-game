@@ -1,6 +1,6 @@
 # Add to do here.
 # TODO_ID: 1
-1. Title: Implement Dynamic Build Numbering for Feature Branches and Main
+1. Title: 🚀 Implement Dynamic Build Numbering for Feature Branches and Main
 Summary:
 We need to implement an automated versioning system that distinguishes between development builds and production-ready builds. The versioning logic should branch based on the target environment:
 
@@ -21,3 +21,11 @@ Format: Major-main.<build_number/github.run_number>
 Example: 1-main.1, 1-main.45
 
 Logic: This is the "Stable" version. By removing the -alpha tag, you signal that this build has passed code review and is ready for deployment.
+
+# TODO_ID: 2
+2. Title: 🚀 Automate Synchronization of TODO Number and TODO_ID in TODO.md file.
+
+Summary:
+Ensure that every task added to the TODO.md file maintains a strict 1-to-1 relationship between its "Generated TODO Number: *****" and its unique identifier (TODO_ID). This will prevent ID mismatches when tasks are reordered
+
+For Generated TODO Number reference https://github.com/ShubhoBhadra/octo-flip-game/actions/runs/25885028863
