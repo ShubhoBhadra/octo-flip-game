@@ -1,6 +1,6 @@
 # Octo-game
 
-This is themed memory matching game where you flip cards to find matching pairs of Octocats..
+This is themed memory matching game where you flip cards to find matching pairs of Octocats.
 
 Game Introduction: Expanded on the theme and the objective of finding the matching Octocats.
 
