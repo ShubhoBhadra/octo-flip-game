@@ -1,7 +1,7 @@
 {
   "name": "Octo-Flip Game",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bullseye",
-  "forwardPorts": [5173],
+  "forwardPorts": [5174],
   "postCreateCommand": "npm install",
   "customizations": {
     "vscode": {
