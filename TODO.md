@@ -5,7 +5,7 @@ Summary:
 We need to implement an automated versioning system that distinguishes between development builds and production-ready builds. The versioning logic should branch based on the target environment:
 
 A.1. Non-Main Branches
-Triggered on every push or pull_request to any branch except main..
+Triggered on every push or pull_request to any branch except main.
 
 Format: Major-alpha.<build_number/github.run_number>
 
