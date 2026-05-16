@@ -1,28 +1,55 @@
-name: Assign build number
+name: Assign build number to branches
 
 on:
   push: 
-    branches: ['octo-v1.0']
+    branches: ['main', 'octo-v1.0']
     # To prevent the build workflow from running when there is only change in the TODO list.
     paths-ignore:
       - 'TODO.md'
 
   pull_request:
-    branches: ['octo-v1.0']
+    branches: ['main', 'octo-v1.0']
     # To prevent the build workflow from running when there is only change in the TODO list.
     paths-ignore:
       - 'TODO.md'
 
 jobs:
-  build-number:
+  build-number-feature:
+    if: ${{ github.ref != 'refs/heads/main' && github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
       
-
       - name: Set Build Number
-        run: echo "BUILD_NO=1.0.${{ github.run_number }}" >> $GITHUB_ENV
+        run: echo "BUILD_NO=1-alpha.${{ github.run_number }}" >> $GITHUB_ENV
+
+      - name: Show Build Number
+        run: echo "The build number is ${{env.BUILD_NO}}"
+
+  build-number-pr-main:
+    if: ${{ github.event_name == 'pull_request' && github.base_ref == 'main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      
+      - name: Set Build Number
+        # Distinguishing PR builds from general alpha builds.
+        run: echo "BUILD_NO=1-pr.${{ github.run_number }}" >> $GITHUB_ENV
+
+      - name: Show Build Number
+        run: echo "The build number is ${{env.BUILD_NO}}"
+
+  build-number-main:
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      
+      - name: Set Build Number
+        run: echo "BUILD_NO=1-main.${{ github.run_number }}" >> $GITHUB_ENV
 
       - name: Show Build Number
         run: echo "The build number is ${{env.BUILD_NO}}"
