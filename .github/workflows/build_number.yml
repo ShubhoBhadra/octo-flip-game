@@ -36,7 +36,7 @@ jobs:
       
       - name: Set Build Number
         # Distinguishing PR builds from general alpha builds.
-        run: echo "BUILD_NO=1-pr.${{ github.run_number }}" >> $GITHUB_ENV
+        run: echo "BUILD_NO=1-pr-main.${{ github.event.pull_request.number }}.${{ github.run_number }}" >> $GITHUB_ENV
 
       - name: Show Build Number
         run: echo "The build number is ${{env.BUILD_NO}}"
@@ -49,7 +49,13 @@ jobs:
         uses: actions/checkout@v4.2.2
       
       - name: Set Build Number
-        run: echo "BUILD_NO=1-main.${{ github.run_number }}" >> $GITHUB_ENV
-
+        run: |
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          PR_NUM=$(echo "$COMMIT_MSG" | grep -oE '\(#([0-9]+)\)|Merge pull request #([0-9]+)' | grep -oE '[0-9]+' | head -n 1)
+          if [ -n "$PR_NUM" ]; then
+            echo "BUILD_NO=1-main.pr${PR_NUM}.${{ github.run_number }}" >> $GITHUB_ENV
+          else
+            echo "BUILD_NO=1-main.${{ github.run_number }}" >> $GITHUB_ENV
+          fi
       - name: Show Build Number
         run: echo "The build number is ${{env.BUILD_NO}}"
